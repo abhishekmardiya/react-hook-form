@@ -9,18 +9,25 @@ export default function Home() {
     formState: { errors, isSubmitting },
     reset,
     getValues,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      email: "Thanos",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+  console.log("email:", getValues("email"));
 
   // data is only available if all the inbuilt validations are passing
   const onsubmit = async (data: FieldValues) => {
-    await new Promise((res) => setTimeout(res, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     reset();
   };
 
   return (
     <form
-      className="flex flex-col gap-6 mt-28 p-7"
+      className="mt-28 flex flex-col gap-6 p-7"
       onSubmit={handleSubmit(onsubmit)}
     >
       <input
@@ -62,7 +69,7 @@ export default function Home() {
       )}
       <button
         type="submit"
-        className={` py-2 px-8 rounded-md max-w-fit  text-white ${
+        className={` max-w-fit rounded-md px-8 py-2  text-white ${
           isSubmitting ? "bg-gray-500" : "bg-teal-700"
         }`}
         disabled={isSubmitting}
